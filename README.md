@@ -35,7 +35,7 @@ if (file_exists($root_dir . '/.env')) {
 define('CRAFT_ENVIRONMENT', getenv('CRAFT_ENV'));
 ```
 
-The plugin still works with just the hostname, but its output won't be so pretty.
+The plugin still works with just the hostname as the value of `CRAFT_ENVIRONMENT`, but its output won't be so pretty.
 
 
 ## Configuration
@@ -44,3 +44,6 @@ Colors can be set per-environment from the plugin's settings page.
 
 You can customise the look of the environment label by editing `resources/environment.css`.
 
+## Todo
+
+* Add an optional setting in `config/general.php` for folks who can't/don't want to set `CRAFT_ENVIRONMENT`.
