@@ -1,0 +1,7 @@
+{
+    "name": "madebykind/craft.labelenvironment",
+    "description": "Provides colour-coded labels in your Craft CMS control panel to help easily distinguish between environments",
+    "require": {
+        "php": ">=5.3.0"
+    }
+}
