@@ -1,0 +1,33 @@
+{% import "_includes/forms" as forms %}
+
+<h2>{{ "LabelEnviroment Settings"|t }}</h2>
+
+<p>{{ "Map colors to environment names for easier identification of environments" }}</p>
+
+<hr>
+{% for environment, color in settings.colorMappings %}
+
+    {{ forms.colorField({
+            label: environment | capitalize,
+            id: 'colorMappings' ~environment,
+            name: 'colorMappings[' ~environment ~']',
+            value: color,
+        })
+    }}
+{% endfor %}
+
+{{ forms.textField({
+        label: 'Prefix',
+        id: 'prefix',
+        name: 'prefix',
+        value: settings.prefix,
+    })
+}}
+
+{{ forms.textField({
+        label: 'Suffix',
+        id: 'suffix',
+        name: 'suffix',
+        value: settings.suffix,
+    })
+}}
