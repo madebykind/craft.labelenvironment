@@ -113,3 +113,4 @@ Please open a GitHub Issue, submit a PR to the `dev` branch, or just email Tom.
 
   - Plugin development: [Michael Rog](http://michaelrog.com) / @michaelrog
   - Plugin development: [Tom Davies](https://github.com/tomdavies) / @metadaptive
+  - Icon: [NAS](http://nasztu.com/), via [The Noun Project](https://thenounproject.com/search/?q=label&i=28588)
