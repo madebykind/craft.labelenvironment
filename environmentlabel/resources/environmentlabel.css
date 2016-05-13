@@ -1,13 +1,12 @@
 body:before {
     display: block;
-    background-color: #0D337C;
-    color: white;
-    text-align: center;
+    background-color: #cc5643;
+    background-image: linear-gradient(#da5a47, #cc5643);
+    color: #ffffff;
+    text-align: right;
     text-transform: uppercase;
-    padding: 17px 25px;
+    padding: 20px 24px;
     font-size: 15px;
     font-weight: 700;
-    bottom: 0;
-    right: 0;
-    z-index: 999;
+    z-index: 9;
 }

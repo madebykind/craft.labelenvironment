@@ -1,69 +1,48 @@
 <?php
-
 namespace Craft;
 
-class LabelEnvironmentPlugin extends BasePlugin
+/**
+ * EnvironmentLabelPlugin
+ *
+ * @author    Tom Davies <tom@madebykind.com>, Michael Rog <michael@michaelrog.com>
+ * @copyright Copyright (c) 2016, Kind
+ * @see       https://github.com/madebykind/craft.labelenvironment
+ * @package   craft.plugins.environmentlabel
+ * @since     1.0
+ */
+class EnvironmentLabelPlugin extends BasePlugin
 {
 
-    function init() {
-
-        
-        $environmentName = craft()->labelEnvironment_config->getEnvironmentName();
-        $pluginSettings = craft()->plugins->getPlugin('labelenvironment')->getSettings();
-
-        // check we have a cp request as we don't want to this js to run anywhere but the cp
-        // and while we're at it check for a logged in user as well
-        if ( craft()->request->isCpRequest() && craft()->userSession->isLoggedIn() )
-        {
-            // the includeJs method lets us add js to the bottom of the page
-            craft()->templates->includeJs('window.environmentName ="' . $environmentName .'"');
-            craft()->templates->includeCss('body:before { content: "' . $pluginSettings->prefix . ' ' . $environmentName . ' ' . $pluginSettings->suffix . '"; }');
-            
-            if (isset($pluginSettings->colorMappings[$environmentName]))
-            {
-                craft()->templates->includeCss('body:before { background-color: '. $pluginSettings->colorMappings[$environmentName] . '; }');
-            }
-            craft()->templates->includeCssResource('labelenvironment/environment.css');
-
-        }
-
-    }
-
     /**
-    * Returns the plugin name.
-    *
-    * @return string
-    */
+     * @return string
+     */
     public function getName()
     {
-        return 'Label Environment';
+        return "Environment Label";
     }
 
-
     /**
-     * Returns the plugin version.
+     * Return the plugin description
      *
      * @return string
      */
-    public function getVersion()
+    public function getDescription()
     {
-        return '0.1.0';
+        return "...so you won't forget where you are.";
     }
 
-
     /**
-     * Returns the name of the plugin developer.
+     * Return the plugin developer's name
      *
      * @return string
      */
     public function getDeveloper()
     {
-        return 'Kind';
+        return "Kind";
     }
 
-
     /**
-     * Returns the preferred URL of the plugin developer.
+     * Return the plugin developer's URL
      *
      * @return string
      */
@@ -73,30 +52,79 @@ class LabelEnvironmentPlugin extends BasePlugin
     }
 
     /**
-     * Registers the Twig extension.
+     * Return the plugin's Documentation URL
      *
-    * @return LabelEnvironmentTwigExtension
+     * @return string
+     */
+    public function getDocumentationUrl()
+    {
+        return 'https://github.com/madebykind/craft.labelenvironment';
+    }
+
+    /**
+     * Return the plugin's current version
+     *
+     * @return string
+     */
+    public function getVersion()
+    {
+        return '2.0.0';
+    }
+
+    /**
+     * Return the plugin's db schema version
+     *
+     * @return string|null
+     */
+    public function getSchemaVersion()
+    {
+        return '0.0.0.0';
+    }
+
+    /**
+     * Return the plugin's db schema version
+     *
+     * @return string
+     */
+    public function getReleaseFeedUrl()
+    {
+        return '';
+    }
+
+    /**
+     * Return whether the plugin has a CP section
+     *
+     * @return bool
+     */
+    public function hasCpSection()
+    {
+        return false;
+    }
+
+    /**
+     * Renders the environment label, if this is an authenticated CP request
+     */
+    function init() {
+
+        /*
+         * We only want to add the environment label to CP requests, and only after a user is logged in.
+         */
+        if (craft()->request->isCpRequest() && craft()->userSession->isLoggedIn())
+        {
+            craft()->environmentLabel->addEnvironmentLabel();
+        }
+
+    }
+
+    /**
+     * Registers the Twig extension
+     *
+     * @return EnvironmentLabelTwigExtension
      */
     public function addTwigExtension()
     {
-        Craft::import('plugins.labelenvironment.twigextensions.LabelEnvironmentTwigExtension');
-        return new LabelEnvironmentTwigExtension();
+        Craft::import('plugins.environmentlabel.twigextensions.*');
+        return new EnvironmentLabelTwigExtension();
     }
 
-
-    public function getSettingsHtml()
-    {
-        return craft()->templates->render('labelenvironment/settings', array(
-            'settings' => $this->getSettings()
-        ));
-    }
-
-    protected function defineSettings()
-    {
-        return array(
-            'colorMappings' => array(AttributeType::Mixed, 'default' => array('development' => '#00ff00', 'staging' => '#0000ff', 'preview' => '#ff0000', 'production' => '#000000')),
-            'prefix' => array(AttributeType::String, 'required' => false, 'default' => ''),
-            'suffix' => array(AttributeType::String, 'required' => false, 'default' => ''),
-        );
-    }
 }
