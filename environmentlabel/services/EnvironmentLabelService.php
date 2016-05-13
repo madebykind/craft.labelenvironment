@@ -89,8 +89,8 @@ class EnvironmentLabelService extends BaseApplicationComponent
         $textColor = $this->getTextColor();
 
         // Include the environment name and label as JS globals
-        craft()->templates->includeJs("window.CRAFT_ENVIRONMENT = " . CRAFT_ENVIRONMENT . ";");
-        craft()->templates->includeJs("window.CRAFT_ENVIRONMENT_LABEL = " . $fullText . ";");
+        craft()->templates->includeJs("window.CRAFT_ENVIRONMENT = '" . CRAFT_ENVIRONMENT . "';");
+        craft()->templates->includeJs("window.CRAFT_ENVIRONMENT_LABEL = '" . $fullText . "';");
 
         $showLabel = craft()->config->get('showLabel', 'environmentlabel');
         if ($showLabel && !empty($fullText))
