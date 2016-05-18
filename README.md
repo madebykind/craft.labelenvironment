@@ -25,7 +25,7 @@ Drop the `environmentlabel` directory into `craft/plugins`, visit the _Settings_
 
 You can configure the colour and text of the environment label using the plugin config file.
 
-Just a `environmentlabel.php` file to your `craft/config` directory, and copy in the default plugin config:
+Just add an `environmentlabel.php` file to your `craft/config` directory, and copy in the default plugin config:
 
 
 ```php
@@ -37,8 +37,8 @@ return array(
 	'label' => CRAFT_ENVIRONMENT,
 	'prefix' => null,
 	'suffix' => null,
-	'labelColor' => #cc5643,
-	'textColor' => #ffffff,
+	'labelColor' => '#cc5643',
+	'textColor' => '#ffffff',
 
 );
 ```
