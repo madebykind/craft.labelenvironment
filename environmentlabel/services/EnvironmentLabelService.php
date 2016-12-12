@@ -13,6 +13,19 @@ namespace Craft;
 class EnvironmentLabelService extends BaseApplicationComponent
 {
 
+
+    /**
+     * Returns the show label bool
+     *
+     * @return bool
+     */
+    public function getShowLabel()
+    {
+        $environmentLabel = craft()->config->get('showLabel', 'environmentlabel');
+        return !empty($environmentLabel) ? $environmentLabel : CRAFT_ENVIRONMENT;
+    }
+
+
     /**
      * Returns the environment label
      *
@@ -21,7 +34,7 @@ class EnvironmentLabelService extends BaseApplicationComponent
     public function getLabel()
     {
         $environmentLabel = craft()->config->get('label', 'environmentlabel');
-        return !empty($environmentLabel) ? $environmentLabel : CRAFT_ENVIRONMENT;
+        return !empty($environmentLabel) ? $environmentLabel : false;
     }
 
     /**
