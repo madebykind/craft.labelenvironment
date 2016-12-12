@@ -21,8 +21,8 @@ class EnvironmentLabelService extends BaseApplicationComponent
      */
     public function getShowLabel()
     {
-        $environmentLabel = craft()->config->get('showLabel', 'environmentlabel');
-        return !empty($environmentLabel) ? $environmentLabel : CRAFT_ENVIRONMENT;
+        $showLabel = craft()->config->get('showLabel', 'environmentlabel');
+        return is_bool($showLabel) ? $showLabel : false;
     }
 
 
@@ -34,7 +34,7 @@ class EnvironmentLabelService extends BaseApplicationComponent
     public function getLabel()
     {
         $environmentLabel = craft()->config->get('label', 'environmentlabel');
-        return !empty($environmentLabel) ? $environmentLabel : false;
+        return !empty($environmentLabel) ? $environmentLabel : CRAFT_ENVIRONMENT;
     }
 
     /**
@@ -105,7 +105,7 @@ class EnvironmentLabelService extends BaseApplicationComponent
         craft()->templates->includeJs("window.CRAFT_ENVIRONMENT = '" . CRAFT_ENVIRONMENT . "';");
         craft()->templates->includeJs("window.CRAFT_ENVIRONMENT_LABEL = '" . $fullText . "';");
 
-        $showLabel = craft()->config->get('showLabel', 'environmentlabel');
+        $showLabel = $this->getShowLabel();
         if ($showLabel && !empty($fullText))
         {
 
