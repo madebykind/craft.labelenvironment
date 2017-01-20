@@ -15,7 +15,7 @@ The colors and text of the environment label are configurable via the plugin con
 
 development:
 
-![Screenshot](environmentlabel/resources/docs/development)
+![Screenshot](environmentlabel/resources/docs/development.png)
 
 staging:
 ![Screenshot](environmentlabel/resources/docs/staging.png)
