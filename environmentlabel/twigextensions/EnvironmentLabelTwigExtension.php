@@ -13,36 +13,36 @@ namespace Craft;
 class EnvironmentLabelTwigExtension extends \Twig_Extension
 {
 
-    /**
-     * Returns an array to be merged into Twig's global variables.
-     *
-     * @return array The globals defined by this extension
-     */
-    public function getGlobals()
-    {
+	/**
+	 * Returns an array to be merged into Twig's global variables.
+	 *
+	 * @return array The globals defined by this extension
+	 */
+	public function getGlobals()
+	{
 
-        $globals['environmentLabel'] = array(
-            'showLabel' => craft()->environmentLabel->getShowLabel(),
-            'label' => craft()->environmentLabel->getLabel(),
-            'prefix' => craft()->environmentLabel->getPrefix(),
-            'suffix' => craft()->environmentLabel->getSuffix(),
-            'fullText' => craft()->environmentLabel->getFullText(),
-            'labelColor' => craft()->environmentLabel->getLabelColor(),
-            'textColor' => craft()->environmentLabel->getTextColor(),
-        );
+		$globals['environmentLabel'] = array(
+			'showLabel' => craft()->environmentLabel->getShowLabel(),
+			'label' => craft()->environmentLabel->getLabel(),
+			'prefix' => craft()->environmentLabel->getPrefix(),
+			'suffix' => craft()->environmentLabel->getSuffix(),
+			'labelColor' => craft()->environmentLabel->getLabelColor(),
+			'textColor' => craft()->environmentLabel->getTextColor(),
+			'renderedTemplate' => craft()->environmentLabel->getRenderedTemplate(),
+		);
 
-        return $globals;
+		return $globals;
 
-    }
+	}
 
-    /**
-     * Returns the Twig extension name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'EnvironmentLabel';
-    }
+	/**
+	 * Returns the Twig extension name.
+	 *
+	 * @return string
+	 */
+	public function getName()
+	{
+		return 'EnvironmentLabel';
+	}
 
 }

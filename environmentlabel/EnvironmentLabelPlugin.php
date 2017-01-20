@@ -68,7 +68,7 @@ class EnvironmentLabelPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '2.0.0';
+        return '3.0.0';
     }
 
     /**

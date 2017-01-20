@@ -1,6 +1,6 @@
 # Environment Label
 
-_Nice coloured labels to help distinguish your CraftCMS environments ...so you don't forget where you are._
+_Nice coloured labels to help distinguish your CraftCMS environments ...so you don't forget where you are, and do something stupid._
 
 by [Tom Davies](http://madebykind.com/) and [Michael Rog](https://topshelfcraft.com)
 
@@ -10,9 +10,15 @@ by [Tom Davies](http://madebykind.com/) and [Michael Rog](https://topshelfcraft.
 
 The _Environment Label_ plugin adds a nice coloured banner to your CraftCMS control panel so you'll never forget what environment you're using.
 
-The colors and text of the environment label are configurable via the plugin config file using config files.
+The colors and text of the environment label are configurable via the plugin config file.
 
-![Screenshot](environmentlabel/resources/docs/staging.jpg)
+
+development:
+
+![Screenshot](environmentlabel/resources/docs/development)
+
+staging:
+![Screenshot](environmentlabel/resources/docs/staging.png)
 
 * * *
 
@@ -72,28 +78,33 @@ return array(
 );
 ```
 
-_(We highly recommend using [dotenv](https://github.com/vlucas/phpdotenv) to store and deploy environment variables on your server. It'll change your life.)_
+_(We highly recommend using [dotenv](https://github.com/vlucas/phpdotenv) to store and deploy environment variables on your server. It'll change your life, just don't expose your db credentials in there...)_
 
-### Template globals
+### Template variables
 
-_Environment Label_ also makes its data available via a Twig template global variable:
+
 
 ```twig
-{{ environmentLabel.label }}
-{{ environmentLabel.prefix }}
-{{ environmentLabel.suffix }}
-{{ environmentLabel.fullText }}
-{{ environmentLabel.labelColor }}
-{{ environmentLabel.textColor }}
+
+{{ craft.enviromentLabel.showLabel }}
+{{ craft.enviromentLabel.label }}
+{{ craft.enviromentLabel.prefix }}
+{{ craft.enviromentLabel.suffix }}
+{{ craft.enviromentLabel.labelColor }}
+{{ craft.enviromentLabel.textColor }}
+{{ craft.enviromentLabel.renderedTemplate }}
+
 ```
+
+
+**DEPRECATED** _Environment Label_ also makes its data available via a Twig template global variable (`environmentLabel`), but this is deprecated as of the `3.0` release. Use `craft.environmentLabel` instead.
 
 ### JavaScript globals
 
-_Environment Label_ makes its label and full text available as JS globals on each authenticated CP page:
+_Environment Label_ makes the current CRAFT_ENVIRONMENT available as a JS global on each authenticated CP page:
 
 ```js
 window.CRAFT_ENVIRONMENT
-window.CRAFT_ENVIRONMENT_LABEL
 ```
 
 ### What are the system requirements?
@@ -101,11 +112,41 @@ window.CRAFT_ENVIRONMENT_LABEL
 Craft 2.5+ and PHP 5.4+
 
 
+### Contributing / I found a bug.
 
-### I found a bug.
+Please open a GitHub Issue, submit a PR to the `develop` branch, or just email Tom.
 
-Please open a GitHub Issue, submit a PR to the `dev` branch, or just email Tom.
 
+* * *
+
+### Changelog
+
+#### 3.0
+
+You should be good to use the same API with a few minor changes, but things have changed a fair bit under the hood:
+
+- Refactored label output to use a template like it should always have done
+- Clean up code to better match the current [Craft coding standards](https://github.com/pixelandtonic/CodingStandards/blob/master/standards/PHP.md)
+- FEATURE template is now completely customisable, can be either a path to a plugin template, or a template string (use a HEREDOC or similar). Go crazy people.
+- FEATURE added `craft.environmentLabel` template variable
+- FEATURE `craft()->environmentLabel->getRenderedTemplate()` which is available in templates via `craft.environmentLabel.renderedTemplate`, should you wish to output the label in your front end templates
+- DEPRECATED `EnvironmentLabelTwigExtension
+`, use the new `craft.environmentLabel` template variable instead. Twig extension will be removed in next major release
+- REMOVED `window.CRAFT_ENVIRONMENT_LABEL` JS var as label is now more than just a single line string, and I'm pretty sure this wasn't really used.
+- REMOVED `craft()->environmentLabel->getFullText()` in favour of `craft()->environmentLabel->getRenderedTemplate()`
+
+
+#### 2.1
+
+Added support for ShowLabel value to be exposed at the front-end template level.
+
+#### 2.0
+
+Refactor thanks to @michaelrog
+
+#### 1.0
+
+Initial release
 
 * * *
 
@@ -113,4 +154,7 @@ Please open a GitHub Issue, submit a PR to the `dev` branch, or just email Tom.
 
   - Plugin development: [Michael Rog](http://michaelrog.com) / @michaelrog
   - Plugin development: [Tom Davies](https://github.com/tomdavies) / @metadaptive
+  - Plugin development: [Joel Bradbury](https://github.com/joelbradbury) / @joelbradbury
+  - Idea for custom template feature: [Andrew Welch](https://github.com/nystudio107) @nystudio107
+
   - Icon: [NAS](http://nasztu.com/), via [The Noun Project](https://thenounproject.com/search/?q=label&i=28588)

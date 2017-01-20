@@ -1,0 +1,29 @@
+{% includeCss %}
+
+body {
+    padding-top: 60px;
+}
+
+.environmentlabel-wrapper {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: right;
+    text-transform: uppercase;
+    padding: 20px 24px;
+    font-size: 15px;
+    font-weight: 700;
+    z-index: 9;
+    background-color: {{ craft.environmentLabel.labelColor }};
+    color: {{ craft.environmentLabel.textColor }} ;
+}
+
+{% endincludecss %}
+<div class="environmentlabel-wrapper">
+    {{ craft.environmentLabel.prefix }}
+    {{ craft.environmentLabel.label }}
+    {{ craft.environmentLabel.suffix }}
+</div>
+

@@ -12,123 +12,128 @@ namespace Craft;
  */
 class EnvironmentLabelService extends BaseApplicationComponent
 {
+	/**
+	 * Returns the show label bool
+	 *
+	 * @return bool
+	 */
+	public function getShowLabel()
+	{
+		$showLabel = craft()->config->get('showLabel', 'environmentlabel');
+		return is_bool($showLabel) ? $showLabel : false;
+	}
 
+	/**
+	 * Returns the environment label
+	 *
+	 * @return string
+	 */
+	public function getLabel()
+	{
+		$environmentLabel = craft()->config->get('label', 'environmentlabel');
+		return !empty($environmentLabel) ? $environmentLabel : CRAFT_ENVIRONMENT;
+	}
 
-    /**
-     * Returns the show label bool
-     *
-     * @return bool
-     */
-    public function getShowLabel()
-    {
-        $showLabel = craft()->config->get('showLabel', 'environmentlabel');
-        return is_bool($showLabel) ? $showLabel : false;
-    }
+	/**
+	 * Returns the label prefix, or null if none is set
+	 *
+	 * @return string|null
+	 */
+	public function getPrefix()
+	{
+		return craft()->config->get('prefix', 'environmentlabel');
+	}
 
+	/**
+	 * Returns the label suffix, or null if none is set
+	 *
+	 * @return string|null
+	 */
+	public function getSuffix()
+	{
+		return craft()->config->get('suffix', 'environmentlabel');
+	}
 
-    /**
-     * Returns the environment label
-     *
-     * @return string
-     */
-    public function getLabel()
-    {
-        $environmentLabel = craft()->config->get('label', 'environmentlabel');
-        return !empty($environmentLabel) ? $environmentLabel : CRAFT_ENVIRONMENT;
-    }
+	/**
+	 * Returns the template for the label
+	 *
+	 * @return string|null
+	 */
+	public function getTemplate()
+	{
+		return craft()->config->get('labelTemplate', 'environmentlabel');
+	}
 
-    /**
-     * Returns the label prefix, or null if none is set
-     *
-     * @return string|null
-     */
-    public function getPrefix()
-    {
-        return craft()->config->get('prefix', 'environmentlabel');
-    }
+	/**
+	 * Parses the labelTemplate config setting as either
+	 * a file template or template string and renders it
+	 *
+	 * @return String rendered template
+	 */
+	public function getRenderedTemplate()
+	{
+		$templateConfig = $this->getTemplate();
 
-    /**
-     * Returns the label suffix, or null if none is set
-     *
-     * @return string|null
-     */
-    public function getSuffix()
-    {
-        return craft()->config->get('suffix', 'environmentlabel');
-    }
+		if (!$templateConfig)
+		{
+			return false;
+		}
 
-    /**
-     * Returns the full text of the environment label with prefix/suffix
-     *
-     * @return string
-     */
-    public function getFullText()
-    {
-        $prefix = (string) $this->getPrefix();
-        $suffix = (string) $this->getSuffix();
-        $label = (string) $this->getLabel();
-        // TODO: Escape/strip quotes, since this string is used in JS variables and CSS content attribute.
-        return $prefix . $label . $suffix;
-    }
+		// is this a template path?
+		if(craft()->templates->doesTemplateExist($templateConfig))
+		{
+			return craft()->templates->render($templateConfig);
+		}
 
-    /**
-     * Returns the environment label background color, or null if none is set
-     *
-     * @return string|null
-     */
-    public function getLabelColor()
-    {
-        return craft()->config->get('labelColor', 'environmentlabel');
-    }
+		// is it a string template
+		else
+		{
+			return craft()->templates->renderString($templateConfig);
+		}
+	}
 
-    /**
-     * Returns the environment label text color, or null if none is set
-     *
-     * @return string|null
-     */
-    public function getTextColor()
-    {
-        return craft()->config->get('textColor', 'environmentlabel');
-    }
+	public function getCssResource(){
+		return craft()->config->get('cssResource', 'environmentlabel');
+	}
 
-    /**
-     * Includes the environment data as a visual banner and as a global JS variable
-     */
-    public function addEnvironmentLabel()
-    {
+	/**
+	 * Returns the environment label background color, or null if none is set
+	 *
+	 * @return string|null
+	 */
+	public function getLabelColor()
+	{
+		return craft()->config->get('labelColor', 'environmentlabel');
+	}
 
-        $fullText = $this->getFullText();
-        $labelColor = $this->getLabelColor();
-        $textColor = $this->getTextColor();
+	/**
+	 * Returns the environment label text color, or null if none is set
+	 *
+	 * @return string|null
+	 */
+	public function getTextColor()
+	{
+		return craft()->config->get('textColor', 'environmentlabel');
+	}
 
-        // Include the environment name and label as JS globals
-        craft()->templates->includeJs("window.CRAFT_ENVIRONMENT = '" . CRAFT_ENVIRONMENT . "';");
-        craft()->templates->includeJs("window.CRAFT_ENVIRONMENT_LABEL = '" . $fullText . "';");
+	/**
+	 * Includes the environment data as a visual banner and as a global JS variable
+	 */
+	public function addEnvironmentLabel()
+	{
 
-        $showLabel = $this->getShowLabel();
-        if ($showLabel && !empty($fullText))
-        {
+		$labelContent = $this->getRenderedTemplate();
+		$labelColor = $this->getLabelColor();
+		$textColor = $this->getTextColor();
 
-            // Include the default styles
-            craft()->templates->includeCssResource('environmentlabel/environmentlabel.css');
+		// Include the environment name and label as JS globals
+		craft()->templates->includeJs("window.CRAFT_ENVIRONMENT = '" . CRAFT_ENVIRONMENT . "';");
 
-            // Include the content
-            craft()->templates->includeCss('body:before { content: "' . $fullText . '"; }');
-
-            // Optionally override the label color
-            if (!empty($labelColor))
-            {
-                craft()->templates->includeCss('body:before { background-image: none; background-color: '. $labelColor . '; }');
-            }
-
-            // Optionally override the label text color
-            if (!empty($textColor))
-            {
-                craft()->templates->includeCss('body:before { color: '. $textColor . '; }');
-            }
-
-        }
-
-    }
-
+		$showLabel = $this->getShowLabel();
+		if ($showLabel && !empty($labelContent))
+		{
+			// Include the content
+			craft()->templates->includeFootHtml($labelContent);
+		}
+	}
 }
