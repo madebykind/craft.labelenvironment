@@ -127,13 +127,13 @@ You should be good to use the same API with a few minor changes, but things have
 
 - Refactored label output to use a template like it should always have done
 - Clean up code to better match the current [Craft coding standards](https://github.com/pixelandtonic/CodingStandards/blob/master/standards/PHP.md)
-- FEATURE template is now completely customisable, can be either a path to a plugin template, or a template string (use a HEREDOC or similar). Go crazy people.
-- FEATURE added `craft.environmentLabel` template variable
-- FEATURE `craft()->environmentLabel->getRenderedTemplate()` which is available in templates via `craft.environmentLabel.renderedTemplate`, should you wish to output the label in your front end templates
-- DEPRECATED `EnvironmentLabelTwigExtension
+- **FEATURE** template is now completely customisable, can be either a path to a plugin template, or a template string (use a HEREDOC or similar). Go crazy people.
+- **FEATURE** added `craft.environmentLabel` template variable
+- **FEATURE** `craft()->environmentLabel->getRenderedTemplate()` which is available in templates via `craft.environmentLabel.renderedTemplate`, should you wish to output the label in your front end templates
+- **DEPRECATED** `EnvironmentLabelTwigExtension
 `, use the new `craft.environmentLabel` template variable instead. Twig extension will be removed in next major release
-- REMOVED `window.CRAFT_ENVIRONMENT_LABEL` JS var as label is now more than just a single line string, and I'm pretty sure this wasn't really used.
-- REMOVED `craft()->environmentLabel->getFullText()` in favour of `craft()->environmentLabel->getRenderedTemplate()`
+- **REMOVED** `window.CRAFT_ENVIRONMENT_LABEL` JS var as label is now more than just a single line string, and I'm pretty sure this wasn't really used.
+- **REMOVED** `craft()->environmentLabel->getFullText()` in favour of `craft()->environmentLabel->getRenderedTemplate()`
 
 
 #### 2.1
