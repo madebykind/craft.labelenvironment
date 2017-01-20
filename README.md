@@ -1,6 +1,6 @@
 # Environment Label
 
-_Nice coloured labels to help distinguish your CraftCMS environments ...so you don't forget where you are, and do something stupid._
+_Nice coloured labels to help distinguish your CraftCMS environments ...so you don't forget where you are, and do something stupid by mistake._
 
 by [Tom Davies](http://madebykind.com/) and [Michael Rog](https://topshelfcraft.com)
 
@@ -156,5 +156,4 @@ Initial release
   - Plugin development: [Tom Davies](https://github.com/tomdavies) / @metadaptive
   - Plugin development: [Joel Bradbury](https://github.com/joelbradbury) / @joelbradbury
   - Idea for custom template feature: [Andrew Welch](https://github.com/nystudio107) @nystudio107
-
   - Icon: [NAS](http://nasztu.com/), via [The Noun Project](https://thenounproject.com/search/?q=label&i=28588)
