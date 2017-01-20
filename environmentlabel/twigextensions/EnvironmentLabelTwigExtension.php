@@ -22,6 +22,7 @@ class EnvironmentLabelTwigExtension extends \Twig_Extension
     {
 
         $globals['environmentLabel'] = array(
+            'showLabel' => craft()->environmentLabel->getShowLabel(),
             'label' => craft()->environmentLabel->getLabel(),
             'prefix' => craft()->environmentLabel->getPrefix(),
             'suffix' => craft()->environmentLabel->getSuffix(),
