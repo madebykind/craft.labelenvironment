@@ -103,7 +103,7 @@ class EnvironmentLabelService extends BaseApplicationComponent
 
         // Include the environment name and label as JS globals
         craft()->templates->includeJs("window.CRAFT_ENVIRONMENT = '" . CRAFT_ENVIRONMENT . "';");
-        craft()->templates->includeJs("window.CRAFT_ENVIRONMENT_LABEL = '" . $fullText . "';");
+        craft()->templates->includeJs("window.CRAFT_ENVIRONMENT_LABEL = " . json_encode($fullText) . ";");
 
         $showLabel = $this->getShowLabel();
         if ($showLabel && !empty($fullText))
