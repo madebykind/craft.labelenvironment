@@ -118,7 +118,7 @@ class EnvironmentLabelService extends BaseApplicationComponent
             // Optionally override the label color
             if (!empty($labelColor))
             {
-                craft()->templates->includeCss('body:before { background-image: none; background-color: '. $labelColor . '; }');
+                craft()->templates->includeCss('html body:before { background-image: none; background-color: '. $labelColor . '; }');
             }
 
             // Optionally override the label text color
